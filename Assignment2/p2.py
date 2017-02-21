@@ -6,6 +6,13 @@ def find_dup_str(s, n):
             return temp_string
     return ""
 
+program Find_Duplicate_String(s, n):
+    for i from 0 to len(s) - 1:
+        temp_s = s substring of length n starting at index i
+        updated_s = s substring of length n starting at index n + i
+        if updated_s contains any substring which matches temp_s:
+            return temp
+
 
 def find_max_dups(s):
     if len(s) > 1:

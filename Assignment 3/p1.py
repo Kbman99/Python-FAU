@@ -1,3 +1,6 @@
+# input_tuple and input_tuple_lc are identical except that one calls
+# calls the check_tokens function which uses list comprehension
+# and the other does not
 def input_tuple_lc(prompt: str, types: tuple, sep: str):
     print("**Using list comprehension**\n")
     answers = input(prompt + "\n**Please use '" + sep + "' to separate your responses**: ")
@@ -15,7 +18,6 @@ def input_tuple_lc(prompt: str, types: tuple, sep: str):
 
 def check_tokens_lc(types: tuple, answers: list):
     if len(types) == len(answers):
-        # This works unless a bool
         answers_list = [types[i](answers[i]) if types[i] != bool else str_to_bool(answers[i])
                         for i in range(len(types))]
     else:
@@ -62,6 +64,7 @@ def str_to_bool(str_to_convert: str):
 
 def read_tuple(types: tuple, sep: str, file):
     try:
+        # reads first line of the file and splits the string
         car_info = file.readline().split(sep)
         if len(types) == len(car_info):
             car_info = [types[i](car_info[i]) if types[i] != bool else str_to_bool(car_info[i])
@@ -80,11 +83,12 @@ while True:
     prompt_for_user = "Enter the first name, last name, age (float), ID (int), full-time (bool)"
     types_required = (str, str, float, int, bool)
     separator = ","
-    # print("Without list comprehension: " + str(input_tuple(prompt_for_user, types_required, separator)) + "\n")
-    # print("With list comprehension: " + str(input_tuple_lc(prompt_for_user, types_required, separator)) + "\n")
+    print("Without list comprehension: " + str(input_tuple(prompt_for_user, types_required, separator)) + "\n")
+    print("With list comprehension: " + str(input_tuple_lc(prompt_for_user, types_required, separator)) + "\n")
     cars_file = open("cars.csv", "r")
-    lol = read_tuple(types_required, separator, cars_file)
-    lol2 = read_tuple(types_required, separator, cars_file)
-    print(lol)
-    print(lol2)
+    line1 = read_tuple(types_required, separator, cars_file)
+    line2 = read_tuple(types_required, separator, cars_file)
+    print(line1)
+    print(line2)
+    # input() acts as a system pause
     input()
